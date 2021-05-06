@@ -65,7 +65,7 @@ if __name__=='__main__':
 			Linear(25, 25),
 			ReLU(),
 			Linear(25, 1),
-			ReLU()
+			Tanh()
 			])
 	
 	train(model, X_train, Y_train, X_test, Y_test)
