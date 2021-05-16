@@ -1,5 +1,6 @@
 from module import Module
 
+# computes the loss using the prediction and ground truth
 class  MSE(Module):
 	def  forward(self , input):
 		pred, target = input

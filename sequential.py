@@ -1,6 +1,7 @@
 import torch
 from module import Module
 
+# allows combination of modules in a sequential structure
 class Sequential(Module):
 
 	def __init__(self, layers):

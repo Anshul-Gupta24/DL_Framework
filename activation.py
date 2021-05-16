@@ -1,6 +1,7 @@
 import torch
 from module import Module
 
+# non-linear activation functions
 class ReLU(Module):
 
 	def __init__(self):
@@ -21,6 +22,7 @@ class ReLU(Module):
 
 	def zero_grad(self):
 		return
+
 
 class Tanh(Module):
 

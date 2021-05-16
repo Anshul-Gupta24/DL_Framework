@@ -1,3 +1,4 @@
+# template class for other modules
 class  Module(object):
 	def  forward(self , *input):
 		raise  NotImplementedError

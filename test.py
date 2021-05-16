@@ -10,22 +10,26 @@ from generate_data import get_data
 
 def train(model, X_train, Y_train, X_test, Y_test):
 
+	# define number of epochs and batch size
 	num_epochs = 100
 	batch_size = 16
 
 	num_samples = X_train.shape[0]
 	num_batches = num_samples // batch_size
 
+	# define loss
 	mse_loss = MSE()
 	for ep in range(num_epochs):
 		idx = 0
 		train_loss = 0
 		for nb in range(num_batches):
 			for i in range(batch_size):
+				# forward pass
 				op = model.forward(X_train[idx])
-
 				loss = mse_loss.forward((op, Y_train[idx]))
 				train_loss += loss
+				
+				# backward pass				
 				model.backward(mse_loss.backward(1))
 				
 				idx += 1
@@ -56,9 +60,11 @@ def test(model, X, Y):
 
 if __name__=='__main__':
 
+	# generate training and test data
 	X_train, Y_train = get_data(n=1000)
 	X_test, Y_test = get_data(n=1000)
 
+	# define model
 	model = Sequential([
 			Linear(2, 25),
 			ReLU(),
@@ -70,7 +76,10 @@ if __name__=='__main__':
 			Tanh()
 			])
 	
+	# train model
 	train(model, X_train, Y_train, X_test, Y_test)
+	
+	# compute final train and test errors	
 	final_train_error = test(model, X_train, Y_train)
 	final_test_error = test(model, X_test, Y_test)
 	print('Final train error is: ', final_train_error)

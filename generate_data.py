@@ -1,6 +1,8 @@
 import torch
 import math
 
+# samples points uniformly from a unit square
+# points within the defined circle have label 1; points outside have label 0
 def get_data(n):
 
 	X = torch.empty(n, 2).uniform_(0, 1)
