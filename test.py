@@ -4,6 +4,7 @@ from linear import Linear
 from activation import ReLU, Tanh
 from sequential import Sequential
 from sgd import SGD
+from loss import MSE
 from generate_data import get_data
 
 
@@ -15,6 +16,7 @@ def train(model, X_train, Y_train, X_test, Y_test):
 	num_samples = X_train.shape[0]
 	num_batches = num_samples // batch_size
 
+	mse_loss = MSE()
 	for ep in range(num_epochs):
 		idx = 0
 		train_loss = 0
@@ -22,9 +24,9 @@ def train(model, X_train, Y_train, X_test, Y_test):
 			for i in range(batch_size):
 				op = model.forward(X_train[idx])
 
-				loss = (op - Y_train[idx]).pow(2) 
+				loss = mse_loss.forward((op, Y_train[idx]))
 				train_loss += loss
-				model.backward(2*(op - Y_train[idx]))
+				model.backward(mse_loss.backward(1))
 				
 				idx += 1
 
