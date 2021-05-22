@@ -1,4 +1,6 @@
 import torch
+torch.manual_seed(10)
+torch.set_grad_enabled(False)
 
 from linear import Linear
 from activation import ReLU, Tanh
@@ -34,6 +36,7 @@ def train(model, X_train, Y_train, X_test, Y_test):
 				
 				idx += 1
 
+			# update model params for each batch
 			SGD(model.param(), alpha=0.001)
 			model.zero_grad()
 		

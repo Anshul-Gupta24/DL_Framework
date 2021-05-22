@@ -6,7 +6,7 @@ import math
 class Linear(Module):
 
 	def __init__(self, in_dim, out_dim):
-		# initialize weights and biases		
+		# initialize weights and biases; similar to pytorch 		
 		std = 1 / math.sqrt(in_dim)
 		self.weights = torch.empty(out_dim, in_dim).uniform_(-std, std)
 		self.biases = torch.empty(out_dim).uniform_(-std, std)
