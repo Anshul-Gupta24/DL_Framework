@@ -11,7 +11,7 @@ class  LossMSE(Module):
 
 		return loss
 
-	def  backward(self, gradwrtoutput):
+	def  backward(self, gradwrtoutput=1):
 		input_grad = 2*(self.pred - self.target)
 		
 		return gradwrtoutput * input_grad
