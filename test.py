@@ -1,4 +1,5 @@
 import torch
+import argparse
 torch.manual_seed(10)
 torch.set_grad_enabled(False)
 
@@ -10,22 +11,18 @@ from loss import LossMSE
 from generate_data import get_data
 
 
-def train(model, X_train, Y_train, X_test, Y_test):
-
-	# define number of epochs and batch size
-	num_epochs = 100
-	batch_size = 16
+def train(model, args, X_train, Y_train, X_test, Y_test):
 
 	num_samples = X_train.shape[0]
-	num_batches = num_samples // batch_size
+	num_batches = num_samples // args.batch_size
 
 	# define loss
 	mse = LossMSE()
-	for ep in range(num_epochs):
+	for ep in range(args.epochs):
 		idx = 0
 		train_loss = 0
 		for nb in range(num_batches):
-			for i in range(batch_size):
+			for i in range(args.batch_size):
 				# forward pass
 				op = model.forward(X_train[idx])
 				loss = mse.forward((op, Y_train[idx]))
@@ -40,7 +37,7 @@ def train(model, X_train, Y_train, X_test, Y_test):
 			SGD(model.param(), alpha=0.001)
 			model.zero_grad()
 		
-		train_loss = train_loss / (num_batches * batch_size)
+		train_loss = train_loss / (num_batches * args.batch_size)
 		print('Avg train loss at epoch ', ep, ': ', train_loss)
 		test_error = test(model, X_test, Y_test)
 		print('Test error at epoch ', ep, ': ', test_error)
@@ -62,10 +59,15 @@ def test(model, X, Y):
 
 
 if __name__=='__main__':
+
+	parser = argparse.ArgumentParser(description='Mini Project 2 arguments.')
+	parser.add_argument('--batch_size', type=int, default=16)
+	parser.add_argument('--epochs', type=int, default=100)
+	parser.add_argument('--num_runs', type = int, default = 1, help = 'Number of runs of a model')
+	args = parser.parse_args()
 	
-	num_runs = 1
-	train_errors = torch.empty(num_runs); test_errors = torch.empty(num_runs)
-	for i in range(num_runs):
+	train_errors = torch.empty(args.num_runs); test_errors = torch.empty(args.num_runs)
+	for i in range(args.num_runs):
 		print('Run: ', i)
 
 		# generate training and test data
@@ -85,7 +87,7 @@ if __name__=='__main__':
 				])
 
 		# train model
-		train(model, X_train, Y_train, X_test, Y_test)
+		train(model, args, X_train, Y_train, X_test, Y_test)
 	
 		# compute final train and test errors	
 		final_train_error = test(model, X_train, Y_train)
@@ -96,7 +98,7 @@ if __name__=='__main__':
 		train_errors[i] = final_train_error
 		test_errors[i] = final_test_error
 
-	if num_runs > 1:
+	if args.num_runs > 1:
 		print('Train error mean: ', train_errors.mean())
 		print('Train error std dev: ', train_errors.std())
 		print('Test error mean: ', test_errors.mean())
