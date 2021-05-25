@@ -38,9 +38,9 @@ def train(model, args, X_train, Y_train, X_test, Y_test):
 			model.zero_grad()
 		
 		train_loss = train_loss / (num_batches * args.batch_size)
-		print('Avg train loss at epoch ', ep, ': ', train_loss)
+		print('Avg train loss at epoch {}: {:.2f}'.format(ep, train_loss.item()))
 		test_error = test(model, X_test, Y_test)
-		print('Test error at epoch ', ep, ': ', test_error)
+		print('Test error at epoch {}: {:.2f}%'.format(ep, test_error.item()*100))
 		print()
 
 
@@ -92,14 +92,14 @@ if __name__=='__main__':
 		# compute final train and test errors	
 		final_train_error = test(model, X_train, Y_train)
 		final_test_error = test(model, X_test, Y_test)
-		print('Final train error is: ', final_train_error)
-		print('Final test error is: ', final_test_error)
+		print('Final train error is: {:.2f}'.format(final_train_error*100))
+		print('Final test error is: {:.2f}'.format(final_test_error))
 		print()
 		train_errors[i] = final_train_error
 		test_errors[i] = final_test_error
 
 	if args.num_runs > 1:
-		print('Train error mean: ', train_errors.mean())
-		print('Train error std dev: ', train_errors.std())
-		print('Test error mean: ', test_errors.mean())
-		print('Test error std dev: ', test_errors.std())
+		print('Train error mean: {:.2f}'.format(train_errors.mean()*100))
+		print('Train error std dev: {:.2f}'.format(train_errors.std()*100))
+		print('Test error mean: {:.2f}'.format(test_errors.mean()*100))
+		print('Test error std dev: {:.2f}'.format(test_errors.std()*100))

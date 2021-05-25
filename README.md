@@ -1,6 +1,6 @@
 # DLC Mini-Project 2
 
-We build a mini-deep learning framework to train simple feedforward networks. Our framework supports the following modules:
+We build a mini-deep learning framework to train simple feedforward networks. The framework is built using the standard tensor operations in PyTorch. It supports the following modules:
 - Linear
 - ReLU
 - Tanh
@@ -31,3 +31,4 @@ python test_pytorchnn.py --num_runs 10
 ```
 make batch_size_ablation
 ```
+NOTE: If 'make' command is not allowed for the project, you can run the commands individually that are provided in the Makefile.
