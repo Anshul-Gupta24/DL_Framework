@@ -92,14 +92,14 @@ if __name__=='__main__':
 		# compute final train and test errors	
 		final_train_error = test(model, X_train, Y_train)
 		final_test_error = test(model, X_test, Y_test)
-		print('Final train error is: {:.2f}'.format(final_train_error*100))
-		print('Final test error is: {:.2f}'.format(final_test_error))
+		print('Final train error is: {:.2f}%'.format(final_train_error.item()*100))
+		print('Final test error is: {:.2f}%'.format(final_test_error.item()*100))
 		print()
 		train_errors[i] = final_train_error
 		test_errors[i] = final_test_error
 
 	if args.num_runs > 1:
-		print('Train error mean: {:.2f}'.format(train_errors.mean()*100))
-		print('Train error std dev: {:.2f}'.format(train_errors.std()*100))
-		print('Test error mean: {:.2f}'.format(test_errors.mean()*100))
-		print('Test error std dev: {:.2f}'.format(test_errors.std()*100))
+		print('Train error mean: {:.2f}%'.format(train_errors.mean().item()*100))
+		print('Train error std dev: {:.2f}%'.format(train_errors.std().item()*100))
+		print('Test error mean: {:.2f}%'.format(test_errors.mean().item()*100))
+		print('Test error std dev: {:.2f}%'.format(test_errors.std().item()*100))
