@@ -1,4 +1,4 @@
-# DLC Mini-Project 2
+# DL Framework in PyTorch
 
 We build a mini-deep learning framework to train simple feedforward networks. The framework is built using the standard tensor operations in PyTorch. It supports the following modules:
 - Linear
